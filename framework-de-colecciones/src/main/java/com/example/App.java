@@ -6,6 +6,7 @@ import java.time.Month;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.OptionalDouble;
 import java.util.function.Predicate;
 import java.util.stream.Stream;
 
@@ -184,6 +185,44 @@ public class App {
 				return persona.genero().equals(Genero.MUJER);
 			}
 		});
+
+		/*
+		 * /* Si la interface que se va a implementar con una clase anonima es una
+		 * interfaz funcional, utilizar una clase anonima es todavia EXCESIVO, demasiado
+		 * codigo, pues ¿Que se utiliza entonces? Se utiliza una EXPRESION LAMBDA
+		 * 
+		 * ¿Que es una expresion lambda?
+		 * 
+		 * Es como un metodo anonimo, se utiliza para pasar a un metodo la
+		 * implementacion del unico metodo abstracto que hay que implementar.
+		 * 
+		 * A continuacion la sintaxis de una expresion lambda
+		 */
+
+		OptionalDouble optionalDelSalarioPromedio = flujoDePersonas.filter(p -> p.genero().equals(Genero.MUJER))
+				.mapToDouble(persona -> persona.salario().doubleValue()).average();
+
+		/*
+		 * ¿Que es un Optional? El tipo de dato Optional es una de las maravillas de las
+		 * versiones mas recientes de Java, surgue en la version 8 de Java. El tipo
+		 * Optional te proteje del temido NullPointerException, es decir, que tu
+		 * intentes trabajar con un objeto y este tome el valor NULL, y el problema es
+		 * que cuando en una operacion interviene un null todo se vuelve NULL. *
+		 * Finalmente, el tipo Optional hay que verlo como una cajita de sorpresa, donde
+		 * puede venir el resultado esperado, que seria el salario promedio en este
+		 * caso, o seria un valor NULL porque el promedio no se pudo calcular, porque
+		 * ninguna de las personas del genero MUJER tenian salario
+		 */
+
+		if (optionalDelSalarioPromedio.isPresent()) {
+
+// De la cajita del Optional puedo extraer el salario promedio
+// sin ningun peligro
+
+			double salarioPromedio = optionalDelSalarioPromedio.getAsDouble();
+
+			System.out.println("El salario promedio es: " + salarioPromedio);
+		}
 
 	}
 }
