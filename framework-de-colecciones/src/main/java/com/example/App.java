@@ -7,7 +7,10 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.OptionalDouble;
+import java.util.Set;
 import java.util.function.Predicate;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
 public class App {
@@ -36,17 +39,17 @@ public class App {
 		 * tuberia para hacer algun tipo de operacion. /* R
 		 */
 
-		Persona persona1 = Persona.builder().nombre("Maria ").apellido1("lopez").apellido2("fernandes")
+		Persona persona1 = Persona.builder().nombre("Maria").apellido1("lopez").apellido2("fernandes")
 				.genero(Genero.MUJER).fechaNacimiento(LocalDate.of(1985, Month.OCTOBER, 12))
 				.salario(new BigDecimal(4500)).build();
 
-		Persona persona2 = Persona.builder().nombre("Carmen").apellido1("flores").apellido2("Martinez")
+		Persona persona2 = Persona.builder().nombre("Maria").apellido1("flores").apellido2("Martinez")
 				.genero(Genero.MUJER).fechaNacimiento(LocalDate.of(1966, Month.FEBRUARY, 02))
 				.salario(new BigDecimal(6000)).build();
 
-		Persona persona3 = Persona.builder().nombre("luis ").apellido1("Acaro").apellido2("Silva").genero(Genero.HOMBRE)
+		Persona persona3 = Persona.builder().nombre("Luis").apellido1("Acaro").apellido2("Silva").genero(Genero.HOMBRE)
 				.fechaNacimiento(LocalDate.of(1972, Month.DECEMBER, 22)).salario(new BigDecimal(6800)).build();
-		Persona persona4 = Persona.builder().nombre("Medardo ").apellido1("Paredes").apellido2("Hernandez")
+		Persona persona4 = Persona.builder().nombre("Luis").apellido1("Paredes").apellido2("Hernandez")
 				.genero(Genero.HOMBRE).fechaNacimiento(LocalDate.of(1997, Month.MARCH, 05))
 				.salario(new BigDecimal(5800)).build();
 
@@ -223,6 +226,52 @@ public class App {
 
 			System.out.println("El salario promedio es: " + salarioPromedio);
 		}
+		/*
+		 * Ejemplo # 1 del Miercoles 24 de Junio.
+		 * 
+		 * Utilizando Operaciones de Agregado, recorrer las lista de personas y obtener
+		 * una nueva coleccion que contenga solamente los nombres de las personas, pero
+		 * sin duplicados
+		 */
+		Set<String> nombresSinDuplicados = personas.stream().map(p -> p.nombre()).collect(Collectors.toSet());
+		/*
+		 * Si al final de la tuberia se quiere obtener una nueva coleccion , la
+		 * operacion terminal tiene que ser el metodo collect(), que recibe la
+		 * implementacion de la interfaz Collector a traves de una clase que tiene el
+		 * mismo nombre pero en plural, Collectors en este caso, que tendra a su vez
+		 * metodos estaticos, en la propia clase Collectors para trabajar con los
+		 * elementos que se colectan al final de la tuberia
+		 */
+		/*
+		 * Cuando la expresion lambda lo unico que hace es llamar al metodo que es quien
+		 * realmente hace el trabajo, utilizar una expresion lambda es poco eficiente y
+		 * redundante, por lo cual lo mejor es que el propio metodo haga el trabajo, sin
+		 * ningun intermediario, es decir que lo correcto es pasar el metodo por
+		 * referencia
+		 */
+
+		Set<String> nombresSinDuplicados2 = personas.stream().map(Persona::nombre).collect(Collectors.toSet());
+
+		// A continuacion vamos a imprimir los elementos de la coleccion
+		// nombresSinDuplicados2
+		System.out.println("Set de nombres sin duplicados: ");
+		
+		//nombresSinDuplicados2.stream().forEach(nombre -> System.out.println(nombre));
+		System.out.println("Set de nombres sin duplicados: ");
+
+		// nombresSinDuplicados2.stream().forEach(nombre -> System.out.println(nombre));
+
+		/* En la sentencia anterior, la expresion lambda lo unico que hace es 
+		* llamar al metodo println, por tanto se puede quitar la lambda y pasar el 
+		* metodo por referencia 
+		* 
+		* En las ultimas versiones de Java, no hace falta el metodo stream() si directamente
+		* se utiliza una operacion terminal a continuacion del origen de la tuberia
+		* */
+
+		nombresSinDuplicados2.forEach(System.out::println);
+		
+		
 
 	}
 }
