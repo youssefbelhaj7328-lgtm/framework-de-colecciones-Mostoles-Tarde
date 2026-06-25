@@ -31,7 +31,7 @@ public record Persona(String nombre, String apellido1, String apellido2, Genero 
 		cmpPrimerApellido : 
 		cmpSegundoApellido != 0 ? 
 		cmpSegundoApellido :
-	
+
 			cmpNombre;
 		// Recordando cual es la sintaxis del operador ternario
 

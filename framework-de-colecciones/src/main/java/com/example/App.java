@@ -257,66 +257,99 @@ public class App {
 		// A continuacion vamos a imprimir los elementos de la coleccion
 		// nombresSinDuplicados2
 		System.out.println("Set de nombres sin duplicados: ");
-		
-		//nombresSinDuplicados2.stream().forEach(nombre -> System.out.println(nombre));
+
+		// nombresSinDuplicados2.stream().forEach(nombre -> System.out.println(nombre));
 		System.out.println("Set de nombres sin duplicados: ");
 
 		// nombresSinDuplicados2.stream().forEach(nombre -> System.out.println(nombre));
 
-		/* En la sentencia anterior, la expresion lambda lo unico que hace es 
-		* llamar al metodo println, por tanto se puede quitar la lambda y pasar el 
-		* metodo por referencia 
-		* 
-		* En las ultimas versiones de Java, no hace falta el metodo stream() si directamente
-		* se utiliza una operacion terminal a continuacion del origen de la tuberia
-		* */
+		/*
+		 * En la sentencia anterior, la expresion lambda lo unico que hace es llamar al
+		 * metodo println, por tanto se puede quitar la lambda y pasar el metodo por
+		 * referencia
+		 * 
+		 * En las ultimas versiones de Java, no hace falta el metodo stream() si
+		 * directamente se utiliza una operacion terminal a continuacion del origen de
+		 * la tuberia
+		 */
 
 		nombresSinDuplicados2.forEach(System.out::println);
-		 /* OBJECT ORDERING (Ordenamiento de Objetos) 
-		  * 
-		  * https://docs.oracle.com/javase/tutorial/collections/interfaces/order.html 
-		  * 
-		  * Los algoritmos son una parte integral del framework de colecciones
-		  * 
-		  * A continuacion vamos a ver los algoritmos de ordenamiento (sort) implementados
-		  * en la clase  Collection
-		  * 
-		  * Como ejemplo vamos a ordenar la lista de nombres siguiente segun el Orden 
-		  * Natural, lexicograficamente de la A a la Z
-		  * 
-		  * */
-List<String> nombres = Arrays.asList("Miguel", "Angel", 
-"Youssef", "Yodalis", "Elida", "Jakelin", "Juan", "Carlos", "Gina");
-		
-System.out.println("Listado original de nombres: ");
-nombres.forEach(System.out::println);
+		/*
+		 * OBJECT ORDERING (Ordenamiento de Objetos)
+		 * 
+		 * https://docs.oracle.com/javase/tutorial/collections/interfaces/order.html
+		 * 
+		 * Los algoritmos son una parte integral del framework de colecciones
+		 * 
+		 * A continuacion vamos a ver los algoritmos de ordenamiento (sort)
+		 * implementados en la clase Collection
+		 * 
+		 * Como ejemplo vamos a ordenar la lista de nombres siguiente segun el Orden
+		 * Natural, lexicograficamente de la A a la Z
+		 * 
+		 */
+		List<String> nombres = Arrays.asList("Miguel", "Angel", "Youssef", "Yodalis", "Elida", "Jakelin", "Juan",
+				"Carlos", "Gina");
+
+		System.out.println("Listado original de nombres: ");
+		nombres.forEach(System.out::println);
 
 //Ordenamiento segun el orden natural (natural ordering)
-/* Vamos a intentar ordenar la lista de personas 
-* ¿Que va a pasar? 
-* 
-* Que no es posible ordenar mi listado de personas, compuesto por elementos que son
-* record de Persona, ¿Por que entonces si se pudo ordenar las lista de nombres? 
-* Rta. Porque todos los tipos de datos de Java implementan la interfaz Comparable,
-* mientras que el tipo record Persona creado por nosotros no implementa la interfaz
-* Comparable, en resumen, que si no se implementa la interfaz Comparable el metodo
-* sort() no tiene medios para comparar los elementos del tipo de datos concreto.
-* 
-* IMPORTANTE!!! El Orden Natural (Natural Ordering) viene dado por la implementacion
-* de la interfaz Comparable, y si el tipo de datos no implementa dicha interfaz pues 
-* NO tiene orden natural, que se podrá ordenar de otra manera pero no segun 
-* el orden natural*/
+		/*
+		 * Vamos a intentar ordenar la lista de personas ¿Que va a pasar?
+		 * 
+		 * Que no es posible ordenar mi listado de personas, compuesto por elementos que
+		 * son record de Persona, ¿Por que entonces si se pudo ordenar las lista de
+		 * nombres? Rta. Porque todos los tipos de datos de Java implementan la interfaz
+		 * Comparable, mientras que el tipo record Persona creado por nosotros no
+		 * implementa la interfaz Comparable, en resumen, que si no se implementa la
+		 * interfaz Comparable el metodo sort() no tiene medios para comparar los
+		 * elementos del tipo de datos concreto.
+		 * 
+		 * IMPORTANTE!!! El Orden Natural (Natural Ordering) viene dado por la
+		 * implementacion de la interfaz Comparable, y si el tipo de datos no implementa
+		 * dicha interfaz pues NO tiene orden natural, que se podrá ordenar de otra
+		 * manera pero no segun el orden natural
+		 */
 
+		System.out.println("Listado de personas sin ordenar");
+		personas.forEach(System.out::println);
 
+		Collections.sort(personas);
 
-System.out.println("Listado de personas sin ordenar");
-personas.forEach(System.out::println);
+		System.out.println("Listado de personas ordenado segun el ORDEN NATURAL");
+		personas.forEach(System.out::println);
 
-Collections.sort(personas);
+		/*
+		 * Imaginate que el Jefe de nuestro Dpto NO necesita ordenar las personas segun
+		 * el ORDEN NATURAL del record Persona, sino que el necesita ordenar la lista de
+		 * personas por el salario, de mayor a menor, es decir, en orden inverso.
+		 * 
+		 * El problema es que en nuestro Dpto NO tenemos el codigo fuente del record
+		 * Persona, para cambiar el ORDEN NATURAL. ¿Que podemos hacer entonces para
+		 * ordenar las personas por el salario SIN modificar el ORDEN NATURAL? *
+		 */
 
-System.out.println("Listado de personas ordenado segun el ORDEN NATURAL");
-personas.forEach(System.out::println);
+		/* Rta. Por suerte, el metodo sort() de la clase Collections puede recibir
+		* un segundo parametro que seria el criterio de comparacion, para 
+		* comparar dos personas sin que intervenga el ORDEN NATURAL */
 
+		Collections.sort(personas, 
+		(p1, p2) -> p1.salario().compareTo(p2.salario()));
 
+		System.out.println("Listado de personas ordenado segun el comparator por el salario de"
+		+ "menor a mayor");
+		personas.forEach(System.out::println);
+		
+		
+		// ¿Como hacer para que muestre las personas de mayor salario primero?
+		// Rta. En el cuerpo de la lambda cambiando el orden, primero la persona 2 
+		// y luego la 1
+
+		Collections.sort(personas, 
+		(p1, p2) -> p2.salario().compareTo(p1.salario()));
+
+		System.out.println("Listado ordenado de mayor a menor salario");
+		personas.forEach(System.out::println);
 	}
 }
