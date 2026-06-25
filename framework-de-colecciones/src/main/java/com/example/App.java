@@ -4,6 +4,8 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Iterator;
 import java.util.List;
 import java.util.OptionalDouble;
@@ -53,7 +55,7 @@ public class App {
 				.genero(Genero.HOMBRE).fechaNacimiento(LocalDate.of(1997, Month.MARCH, 05))
 				.salario(new BigDecimal(5800)).build();
 
-		Persona persona5 = Persona.builder().nombre("Wilson ").apellido1("Ruiz").apellido2("Alvares")
+		Persona persona5 = Persona.builder().nombre("Wilson ").apellido1("flores").apellido2("Martinez")
 				.genero(Genero.HOMBRE).fechaNacimiento(LocalDate.of(1989, Month.AUGUST, 15))
 				.salario(new BigDecimal(6500)).build();
 //List<Persona> listaInmutableDePersona = List.of(persona1,persona1,persona3,persona4, persona5);
@@ -270,8 +272,51 @@ public class App {
 		* */
 
 		nombresSinDuplicados2.forEach(System.out::println);
+		 /* OBJECT ORDERING (Ordenamiento de Objetos) 
+		  * 
+		  * https://docs.oracle.com/javase/tutorial/collections/interfaces/order.html 
+		  * 
+		  * Los algoritmos son una parte integral del framework de colecciones
+		  * 
+		  * A continuacion vamos a ver los algoritmos de ordenamiento (sort) implementados
+		  * en la clase  Collection
+		  * 
+		  * Como ejemplo vamos a ordenar la lista de nombres siguiente segun el Orden 
+		  * Natural, lexicograficamente de la A a la Z
+		  * 
+		  * */
+List<String> nombres = Arrays.asList("Miguel", "Angel", 
+"Youssef", "Yodalis", "Elida", "Jakelin", "Juan", "Carlos", "Gina");
 		
-		
+System.out.println("Listado original de nombres: ");
+nombres.forEach(System.out::println);
+
+//Ordenamiento segun el orden natural (natural ordering)
+/* Vamos a intentar ordenar la lista de personas 
+* ¿Que va a pasar? 
+* 
+* Que no es posible ordenar mi listado de personas, compuesto por elementos que son
+* record de Persona, ¿Por que entonces si se pudo ordenar las lista de nombres? 
+* Rta. Porque todos los tipos de datos de Java implementan la interfaz Comparable,
+* mientras que el tipo record Persona creado por nosotros no implementa la interfaz
+* Comparable, en resumen, que si no se implementa la interfaz Comparable el metodo
+* sort() no tiene medios para comparar los elementos del tipo de datos concreto.
+* 
+* IMPORTANTE!!! El Orden Natural (Natural Ordering) viene dado por la implementacion
+* de la interfaz Comparable, y si el tipo de datos no implementa dicha interfaz pues 
+* NO tiene orden natural, que se podrá ordenar de otra manera pero no segun 
+* el orden natural*/
+
+
+
+System.out.println("Listado de personas sin ordenar");
+personas.forEach(System.out::println);
+
+Collections.sort(personas);
+
+System.out.println("Listado de personas ordenado segun el ORDEN NATURAL");
+personas.forEach(System.out::println);
+
 
 	}
 }
