@@ -351,5 +351,49 @@ public class App {
 
 		System.out.println("Listado ordenado de mayor a menor salario");
 		personas.forEach(System.out::println);
+		/* Ejercicio 1 del lines 29 de Junio.
+		 * Ordenar la coleccion de persona segun la edad de la persona  de Mayor  a Menor
+		 * es decir la s persona Mayores se muestren primero*/
+		
+		/*Solucion de JAKELEN*/
+		Collections.sort(personas, 
+				(p3, p4) -> p4.fechaNacimiento().compareTo(p3.fechaNacimiento()));
+		  System.out.println("Listado de personas ordenado segun la edad de la persona de mayor a menor");
+		  personas.forEach( System.out::println);
+		
+		/*Ejercicio 2 de lunes 29 de Junio
+		 * Ordenar la coleccion de personas primero por genero y luego por edad,
+		 * mostrando primero las personas mas jovenes de su gene
+		 * 
+		 * */
+		/* /* Para solucionar el ejercicio deberiamos crear un metodo que nos devuelva la edad
+* de la persona, en el record Persona */
+		
+		/* Ejecicio 3 de lunes  29 de Junio
+		 * Recorrer la colecion de personas y/* Ejercicio # 1 del Lunes 29 de Junio.
+* 
+* Ordenar la coleccion de personas segun la edad de la persona de mayor a menor,
+* es decir, las personas mayores se muestren primero. */
+
+/* Ejercicio # 2 del Lunes 29 de Junio
+ * 
+* 
+* Ordenar la coleccion de personas primero por el genero y luego por la edad, 
+* mostrando primero las personas mas jovenes de su genero. 
+* */
+		  /*Para solucionar el ejercicio deberiamos crear metodo que nos devuelva la edad de la persona ,
+		   * en el record persona*/
+		  
+
+/**
+ * 
+* Ejercicio # 3 del Lunes 29 de Junio
+* 
+* Recorrer la coleccion de personas y obtener una nueva coleccion con las personas
+* del genero MUJER que nacieron en la segunda quincena del mes de su fecha de 
+* nacimiento.
+*/
+		
+		
 	}
 }
