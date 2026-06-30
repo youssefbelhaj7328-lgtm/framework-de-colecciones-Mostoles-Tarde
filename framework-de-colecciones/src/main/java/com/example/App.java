@@ -3,9 +3,13 @@ package com.example;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.time.Month;
+import java.time.temporal.Temporal;
+import java.time.temporal.TemporalAdjuster;
+import java.time.temporal.TemporalAdjusters;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.Comparator;
 import java.util.Iterator;
 import java.util.List;
 import java.util.OptionalDouble;
@@ -14,6 +18,8 @@ import java.util.function.Predicate;
 import java.util.stream.Collector;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+
+import javax.swing.plaf.basic.DragRecognitionSupport.BeforeDrag;
 
 public class App {
 
@@ -42,7 +48,7 @@ public class App {
 		 */
 
 		Persona persona1 = Persona.builder().nombre("Maria").apellido1("lopez").apellido2("fernandes")
-				.genero(Genero.MUJER).fechaNacimiento(LocalDate.of(1985, Month.OCTOBER, 12))
+				.genero(Genero.MUJER).fechaNacimiento(LocalDate.of(1985, Month.OCTOBER, 20))
 				.salario(new BigDecimal(4500)).build();
 
 		Persona persona2 = Persona.builder().nombre("Maria").apellido1("flores").apellido2("Martinez")
@@ -362,6 +368,7 @@ public class App {
 		  personas.forEach( System.out::println);
 		
 		/*Ejercicio 2 de lunes 29 de Junio
+		 * 
 		 * Ordenar la coleccion de personas primero por genero y luego por edad,
 		 * mostrando primero las personas mas jovenes de su gene
 		 * 
@@ -383,7 +390,12 @@ public class App {
 * */
 		  /*Para solucionar el ejercicio deberiamos crear metodo que nos devuelva la edad de la persona ,
 		   * en el record persona*/
+		  Collections.sort(personas, Comparator.comparing(Persona::genero, 
+				  Comparator.nullsFirst(Comparator.naturalOrder()))
+		  .thenComparing(Persona::edad));
 		  
+		  System.out.println("Solucion al ejercicio 2");
+		  personas.forEach( System.out::println);
 
 /**
  * 
@@ -394,6 +406,22 @@ public class App {
 * nacimiento.
 */
 		
+		personas.stream().filter(p ->p Genero().equals(Genero.MUJER))
+		p.fechaNacimiento().With(TemporalAdjusters
+				lastDayOfMonth()).minusDays(15).isBefore(p.fechaNacimiento()))
+	.Colect(collectors.tolist());
+	
+	
+	persona2.forEach(System.out::println);
+	System.out.println("solucion de ejercicio 3");
+	
+	
+
 		
+	
+
+		
+	
+	
 	}
 }
